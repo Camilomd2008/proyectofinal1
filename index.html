@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECOTEXTIL - Inicio</title>
+    <style>
+        /*
+         * ========================================
+         * CSS para Responsividad (Movil y Escritorio)
+         * ========================================
+         */
+
+        /* Asegura un modelo de caja consistente para facilitar el diseño */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        /* Contenedor principal para centrar y limitar ancho en pantallas grandes */
+        .container {
+            width: 90%; /* Ancho en móviles y tablets */
+            max-width: 1200px; /* Ancho máximo en escritorio */
+            margin: 0 auto;
+            padding: 0 15px; /* Pequeño padding lateral */
+        }
+
+        /*
+         * ========================================
+         * ENCABEZADO Y NAVEGACIÓN (HEADER)
+         * ========================================
+         */
+
+        header {
+            background-color: #f7f7f7; /* Fondo para header */
+            padding: 10px 0;
+        }
+
+        .nav-centro {
+            display: flex;
+            flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente línea */
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .nav-centro h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            flex-basis: 100%; /* Ocupa todo el ancho en móvil */
+            text-align: center;
+            padding-bottom: 10px;
+        }
+
+        .menu {
+            display: flex;
+            flex-wrap: wrap; /* Los elementos del menú también pueden envolverse */
+            justify-content: center; /* Centra los items del menú */
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%; /* Ocupa todo el ancho */
+        }
+
+        .menu li {
+            padding: 10px 8px; /* Menor padding en móvil */
+            position: relative;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+
+        /* Ajuste del ícono del carrito para que se vea bien en la línea */
+        .carrito-icono {
+            display: inline-flex; /* Asegura que el contenedor del icono se ajuste al contenido */
+            align-items: center;
+            justify-content: center;
+            padding: 0 5px;
+        }
+        .carrito-icono img {
+            vertical-align: middle;
+        }
+
+        /* Submenú (Dropdown) - Asegúrate de que se oculte por defecto */
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            min-width: 150px;
+            z-index: 1000;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .dropdown:hover .submenu {
+            display: block;
+        }
+
+        .submenu li {
+            padding: 0;
+            width: 100%;
+        }
+
+        .submenu a {
+            padding: 8px 15px;
+            white-space: nowrap;
+        }
+
+        /*
+         * ========================================
+         * SECCIÓN HERO (Banner Inicial)
+         * ========================================
+         */
+
+        .hero {
+            padding: 40px 0;
+            text-align: center;
+            background-color: #e0f7fa; /* Un fondo de ejemplo si no tienes una imagen de fondo definida */
+        }
+
+        .hero-content h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #9c88ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        /*
+         * ========================================
+         * SLIDER DE PRODUCTOS (Configurado para desplazamiento automático)
+         * ========================================
+         */
+
+        .slider-container {
+            position: relative;
+            width: 90%;
+            max-width: 1000px; 
+            margin: 20px auto;
+        }
+        
+        .slider-box {
+            overflow-x: hidden; /* Oculta la barra de scroll y controlamos el movimiento con JS */
+            white-space: nowrap; 
+            padding: 10px 0;
+            scroll-behavior: smooth; /* Desplazamiento suave para la transición */
+        }
+        
+        .slider-box ul {
+            display: flex; /* Usamos flex para mantener los items en línea */
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .slider-box ul li {
+            /* * Importante: flex-shrink: 0 evita que el elemento se haga más pequeño 
+             * de su ancho definido (200px)
+             */
+            flex: 0 0 200px; 
+            margin-right: 15px;
+            text-align: center;
+            display: inline-block; 
+            white-space: normal; 
+        }
+
+        .slide-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        /* Estilos para los botones de navegación del carrusel */
+        .slider-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(156, 136, 255, 0.7); /* Color lavanda con transparencia */
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 1.5rem;
+            line-height: 1;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        .slider-nav-btn:hover {
+            background: #9c88ff;
+        }
+        #prev-slide {
+            left: -50px; /* Colócalo fuera del slider-container si el ancho lo permite */
+        }
+        #next-slide {
+            right: -50px; /* Colócalo fuera del slider-container si el ancho lo permite */
+        }
+        
+        /* Ajuste de posición de los botones para pantallas pequeñas */
+        @media (max-width: 1100px) {
+            #prev-slide { left: 0px; }
+            #next-slide { right: 0px; }
+        }
+
+
+        /*
+         * ========================================
+         * BANNERS DE CATEGORÍAS
+         * ========================================
+         */
+
+        .banner-categorias {
+            display: flex;
+            flex-wrap: wrap; 
+            gap: 15px;
+            margin: 40px auto;
+            width: 90%;
+            max-width: 1200px;
+            justify-content: center;
+        }
+
+        .categoria-banner {
+            flex: 1 1 300px; 
+            height: 250px;
+            
+            background-size: cover;
+            background-position: center; 
+
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            color: white; 
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .categoria-banner .contenido {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.4); 
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .titulo-categoria {
+            margin: 0 0 5px 0;
+            font-size: 1.2rem;
+        }
+
+        .boton-plus {
+            background-color: #9c88ff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            line-height: 1;
+        }
+
+        /*
+         * ========================================
+         * FOOTER
+         * ========================================
+         */
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+
+        footer .container {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .social-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Estilos del Chatbot y Modal (Mantengo los estilos anteriores) */
+        #chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2000;
+        }
+        .circle-button {
+            background-color: #9c88ff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        #chatbot-window {
+            display: none;
+            width: 300px;
+            height: 400px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            bottom: 60px;
+            right: 0;
+        }
+        #chat-header {
+            background-color: #9c88ff;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #close-chat {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        #chat-messages {
+            flex-grow: 1;
+            padding: 10px;
+            overflow-y: auto;
+            border-bottom: 1px solid #eee;
+        }
+        .message {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            max-width: 80%;
+        }
+        .user-message {
+            background-color: #e6e6e6;
+            margin-left: auto;
+        }
+        .bot-message {
+            background-color: #9c88ff1a;
+            margin-right: auto;
+        }
+        #chat-input-container {
+            display: flex;
+            padding: 10px;
+            gap: 5px;
+        }
+        #user-input {
+            flex-grow: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #send-button, #clear-chat-button {
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #send-button {
+            background-color: #9c88ff;
+            color: white;
+        }
+        #clear-chat-button {
+            background-color: #ff9f80;
+            color: white;
+        }
+        /* Estilos de Acordeón en Chatbot */
+        .product-accordion-item {
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }
+        .accordion-button {
+            background-color: #f1f1f1;
+            color: #444;
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .accordion-content {
+            padding: 0 10px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: white;
+        }
+        .accordion-content.active {
+            padding: 10px;
+        }
+        .accordion-icon {
+            margin-left: 10px;
+            transition: transform 0.2s;
+        }
+        .product-accordion-item-nested {
+            border: 1px solid #eee;
+            margin: 5px 0;
+            border-radius: 3px;
+        }
+        .product-accordion-item-nested .accordion-button {
+            background-color: #fafafa;
+            font-size: 0.85rem;
+        }
+        .product-accordion-item-nested .accordion-content.active {
+            padding: 8px;
+        }
+        .buy-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        /* Estilos del Modal de Encuesta */
+        #miModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none; /* Oculto por defecto */
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+        }
+        #miModal[aria-hidden="false"] {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 90%;
+            width: 600px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            height: 90vh; 
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-content h2 {
+            flex-shrink: 0;
+        }
+        .modal-content iframe {
+            width: 100%;
+            flex-grow: 1;
+            border: none;
+        }
+        .modal-content .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .modal-content .close:hover {
+            color: #333;
+        }
+        .btn-encuesta {
+            background-color: #f39c12;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        /*
+         * ========================================
+         * MEDIA QUERY PARA ESCRITORIO (a partir de 768px)
+         * ========================================
+         * Esto revierte los cambios móviles para pantallas grandes
+         */
+        @media (min-width: 768px) {
+            .nav-centro {
+                flex-wrap: nowrap; 
+                justify-content: space-between;
+            }
+
+            .nav-centro h1 {
+                flex-basis: auto; 
+                text-align: left;
+                padding-bottom: 0;
+            }
+
+            .menu {
+                width: auto;
+                flex-wrap: nowrap; 
+                justify-content: flex-end;
+            }
+
+            .menu li {
+                padding: 10px 15px; 
+            }
+
+            .hero-content h2 {
+                font-size: 3rem; 
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            #chatbot-window {
+                width: 350px;
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav-centro">
+            <h1>Ecotextil</h1>
+            <ul class="menu">
+                <li><a href="index.html">inicio</a></li>
+                <li class="dropdown">
+                    <a href="nosotros.html">Nosotros</a>
+                    <ul class="submenu">
+                        <li><a href="#quienes-somos">Quiénes Somos</a></li>
+                        <li><a href="#nuestra-mision">Nuestra Misión</a></li>
+                        <li><a href="#nuestra-vision">Nuestra Visión</a></li>
+                        <li><a href="#resultados">Resultados de la Encuesta</a></li>
+                    </ul>
+                </li>
+                <li><a href="productos2.html">Productos</a></li>
+                <li><a href="Contactanos.html">Contáctanos</a></li>
+                <li>
+                    <a href="Carrito.html" class="carrito-icono" style="position: relative;">
+                       <img src="img/464-4646442_carrito-de-compras-carro-de-compras-blanco-clipart.png" alt="Carrito de compras" style="width: 24px; height: 24px;">
+                       <span id="contador-carrito" style="position: absolute; top: -8px; right: -8px; background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px;">0</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <div class="container hero-content">
+                <h2>Moda con Impacto</h2>
+                <p>productos sostenibles que marcan la diferencia.</p>
+                <a href="productos2.html" class="btn">Descubre Nuestros Productos</a>
+                <div id="theCarousel" class="carousel slide" data-ride="carousel"></div>
+            </div>
+        </section>
+
+        <div class="slider-container">
+            <button id="prev-slide" class="slider-nav-btn" aria-label="Anterior">&#10094;</button>
+            <div id="product-slider" class="slider-box">
+                <ul>
+                    <li>
+                        <div class="slide-item">
+                            <img src="img/pañoleta.jpg" alt="Producto 1">
+                            <p class="description">Pañoleta</p>
+                            <a href="productos2.html" class="btn-ver-mas">Ver más</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="slide-item">
+                            <img src="img/bolsojean.jpg" alt="Producto 2">
+                            <p class="description">Bolso de Jean</p>
+                            <a href="productos2.html" class="btn-ver-mas">Ver más</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="slide-item">
+                            <img src="img/WhatsApp Image 2025-06-05 at 11.37.26 PM.jpeg" alt="Producto 3">
+                            <p class="description">Cama para Perro</p>
+                            <a href="productos2.html" class="btn-ver-mas">Ver más</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="slide-item">
+                            <img src="img/WhatsApp Image 2025-09-11 at 1.32.17 PM.jpeg" alt="Producto 4">
+                            <p class="description">Maleta de Jean</p>
+                            <a href="productos2.html" class="btn-ver-mas">Ver más</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="slide-item">
+                            <img src="img/WhatsApp Image 2025-06-06 at 1.17.37 PM.jpeg" alt="Producto 5">
+                            <p class="description">Trapo para Limpiar</p>
+                            <a href="productos2.html" class="btn-ver-mas">Ver más</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="slide-item">
+                            <img src="img/WhatsApp Image 2025-08-29 at 1.40.49 PM.jpeg" alt="Producto 6">
+                            <p class="description">Funda para Almohada</p>
+                            <a href="productos2.html" class="btn-ver-mas">Ver más</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="slide-item">
+                            <img src="img/pañoleta.jpg" alt="Producto 7">
+                            <p class="description">Pañoleta</p>
+                            <a href="productos2.html" class="btn-ver-mas">Ver más</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="slide-item">
+                            <img src="img/bolsojean.jpg" alt="Producto 8">
+                            <p class="description">Bolso de Jean</p>
+                            <a href="productos2.html" class="btn-ver-mas">Ver más</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="slide-item">
+                            <img src="img/WhatsApp Image 2025-06-05 at 11.37.26 PM.jpeg" alt="Producto 9">
+                            <p class="description">Cama para Perro</p>
+                            <a href="productos2.html" class="btn-ver-mas">Ver más</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="slide-item">
+                            <img src="img/WhatsApp Image 2025-09-11 at 1.32.17 PM.jpeg" alt="Producto 10">
+                            <p class="description">Maleta de Jean</p>
+                            <a href="productos2.html" class="btn-ver-mas">Ver más</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="slide-item">
+                            <img src="img/WhatsApp Image 2025-06-06 at 1.17.37 PM.jpeg" alt="Producto 11">
+                            <p class="description">Trapo para Limpiar</p>
+                            <a href="productos2.html" class="btn-ver-mas">Ver más</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="slide-item">
+                            <img src="img/WhatsApp Image 2025-08-29 at 1.40.49 PM.jpeg" alt="Producto 12">
+                            <p class="description">Funda para Almohada</p>
+                            <a href="productos2.html" class="btn-ver-mas">Ver más</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <button id="next-slide" class="slider-nav-btn" aria-label="Siguiente">&#10095;</button>
+        </div>
+        <center><h2>Descubre nuestros productos segun tu necesidad</h2></center>
+
+        <section class="banner-categorias">
+            <div class="categoria-banner pastel-card" style="background-image: url('img/illustration-silhouettes-of-dogs-and-cats-vector.jpg');">
+                <div class="contenido">
+                    <h3 class="titulo-categoria">MASCOTAS</h3>
+                    <p class="descripcion-categoria"></p>
+                    <button class="boton-plus" onclick="window.location.href='productos2.html'">+</button>
+
+                </div>
+            </div>
+            <div class="categoria-banner pastel-card" style="background-image: url('img/Basic_Elements__28161_29.jpg')">
+                <div class="contenido">
+                    <h3 class="titulo-categoria">HOGAR</h3>
+                    <p class="descripcion-categoria"></p>
+                    <button class="boton-plus" onclick="window.location.href='productos2.html'">+</button>
+
+                </div>
+            </div>
+            <div class="categoria-banner pastel-card" style="background-image: url('img/depositphotos_380531026-stock-illustration-shopping-bag-icon-bag-vector.jpg');">
+                <div class="contenido">
+                    <h3 class="titulo-categoria">ACCESORIOS</h3>
+                    <p class="descripcion-categoria"></p>
+                    <button class="boton-plus" onclick="window.location.href='productos2.html'">+</button>
+
+                </div>
+            </div>
+        </section>
+
+        <div id="chatbot-container">
+            <button id="chatbot-toggle" class="circle-button"> 💬 </button>
+            <div id="chatbot-window" style="display:none;">
+                <div id="chat-header">
+                    <h3>Asistente Ecotextil</h3>
+                    <span id="close-chat">&times;</span>
+                </div>
+                <div id="chat-messages">
+                    </div>
+                <div id="chat-input-container">
+                    <input type="text" id="user-input" placeholder="Escribe aquí..." />
+                    <button id="send-button">Enviar</button>
+                    <button id="clear-chat-button">Limpiar</button>
+                </div>
+            </div>
+        </div>
+
+    <div style="text-align:center; margin: 40px 0;">
+      <button class="btn-encuesta" onclick="abrirModal()">📋 Participar en la Encuesta</button>
+    </div>
+
+    <div id="miModal" aria-hidden="true">
+      <div class="modal-content" role="dialog" aria-modal="true" aria-label="Encuesta">
+        <button class="close" aria-label="Cerrar encuesta" onclick="cerrarModal()">&times;</button>
+        <h2 style="margin-top:0; text-align:center;">Formulario de Encuesta</h2>
+
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdaiioL79tYzXJpZDz_PtSCuuaNbYFRT74u2r_1M8q1kGwHBw/viewform?embedded=true"
+                loading="lazy"></iframe>
+      </div>
+    </div>
+
+
+    </main>
+
+    <footer>
+        <div class="container" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem;">
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Buzón de Sugerencias</h3>
+                <form id="sugerencias-form" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <textarea name="sugerencia" rows="4" placeholder="Escribe tu sugerencia aquí..." required
+                        style="padding: 1rem; border: 1px solid #ccc; border-radius: 8px;"></textarea>
+                    <button type="submit"
+                        style="background-color: #9c88ff; color: white; border: none; padding: 0.75rem; border-radius: 8px; cursor: pointer;">
+                        Enviar Sugerencia
+                    </button>
+                    <p id="mensaje-confirmacion" style="display: none; color: green;">¡Gracias por tu sugerencia!</p>
+                </form>
+            </div>
+
+            <div style="flex: 1; min-width: 250px;">
+                <h3>Síguenos en:</h3>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/" target="_blank" class="social-btn instagram">
+                        <img src="img/Instagram-logo.png" alt="Instagram">
+                    </a>
+                    <a href="https://wa.me/3147700560" target="_blank" class="social-btn whatsapp">
+                        <img src="img/whatsapp-logo.webp" alt="WhatsApp">
+                    </a>
+                    <a href="https://www.facebook.com/" target="_blank" class="social-btn facebook">
+                        <img src="img/facebook-logo.webp" alt="Facebook">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" style="text-align: center; margin-top: 1rem;">
+            <p>&copy; 2024 ECOTEXTIL. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+<script>
+    // ==========================
+    // --- LÓGICA DEL CARRUSEL ---
+    // ==========================
+    const slider = document.getElementById('product-slider');
+    const prevButton = document.getElementById('prev-slide');
+    const nextButton = document.getElementById('next-slide');
+    
+    // Obtiene el ancho de un elemento (slide item) más su margen derecho (15px)
+    // Usamos un ancho fijo de 215px (200px del li + 15px de margin)
+    const slideWidth = 215; 
+    let scrollInterval;
+
+    function scrollNext() {
+        // scrollLeft es la posición actual de desplazamiento horizontal
+        // scrollWidth es el ancho total del contenido
+        // offsetWidth es el ancho visible del slider
+        if (slider.scrollLeft + slider.offsetWidth >= slider.scrollWidth) {
+            // Si llega al final, regresa al inicio con un scroll instantáneo
+            slider.scrollLeft = 0;
+        } else {
+            // Desplázate hacia adelante un ancho de elemento
+            slider.scrollLeft += slideWidth;
+        }
+    }
+    
+    function scrollPrev() {
+        if (slider.scrollLeft === 0) {
+            // Si está en el inicio, ve al final
+            slider.scrollLeft = slider.scrollWidth - slider.offsetWidth;
+        } else {
+            // Desplázate hacia atrás un ancho de elemento
+            slider.scrollLeft -= slideWidth;
+        }
+    }
+
+    // Inicia el desplazamiento automático
+    function startAutoScroll() {
+        // Desplazamiento cada 3 segundos (3000 milisegundos)
+        scrollInterval = setInterval(scrollNext, 3000);
+    }
+
+    // Detiene el desplazamiento automático
+    function stopAutoScroll() {
+        clearInterval(scrollInterval);
+    }
+    
+    // Asigna eventos a los botones de navegación
+    prevButton.addEventListener('click', () => {
+        stopAutoScroll();
+        scrollPrev();
+        startAutoScroll(); // Reinicia el auto-scroll
+    });
+
+    nextButton.addEventListener('click', () => {
+        stopAutoScroll();
+        scrollNext();
+        startAutoScroll(); // Reinicia el auto-scroll
+    });
+    
+    // Inicia el carrusel al cargar la página
+    startAutoScroll();
+
+    // ===================================
+    // --- OTRAS FUNCIONES (sin cambios) ---
+    // ===================================
+    // Funciones del Modal
+    function abrirModal() {
+        document.getElementById('miModal').setAttribute('aria-hidden', 'false');
+    }
+
+    function cerrarModal() {
+        document.getElementById('miModal').setAttribute('aria-hidden', 'true');
+    }
+
+    // Lógica del Carrito
+    function cambiarImagen(img) {
+        document.getElementById('imagen-principal').src = img.src;
+    }
+
+    function agregarAlCarrito() {
+        const nombre = document.querySelector('.info h2').textContent.trim();
+        const precioTexto = document.querySelector('.precio').textContent.replace(/[^\d]/g, '');
+        const precio = parseInt(precioTexto, 10) || 0;
+        const cantidad = 1;
+        const imagen = document.getElementById('imagen-principal').src;
+
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const index = carrito.findIndex(item => item.nombre === nombre);
+
+        if (index > -1) {
+            carrito[index].cantidad += cantidad;
+        } else {
+            carrito.push({ nombre, precio, cantidad, imagen });
+        }
+
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+
+        // Actualizar contador total
+        let total = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+        localStorage.setItem('carritoCantidad', total);
+        document.getElementById('contador-carrito').textContent = total;
+    }
+
+    function actualizarContadorCarrito() {
+        const cantidad = localStorage.getItem('carritoCantidad') || '0';
+        const contador = document.getElementById('contador-carrito');
+        if (contador) contador.textContent = cantidad;
+    }
+
+    actualizarContadorCarrito();
+
+    // ==========================
+    // --- LÓGICA DEL CHATBOT ---
+    // ==========================
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotWindow = document.getElementById('chatbot-window');
+    const chatClose = document.getElementById('close-chat');
+    const userInput = document.getElementById('user-input');
+    const sendButton = document.getElementById('send-button');
+    const clearChatButton = document.getElementById('clear-chat-button');
+    const chatMessages = document.getElementById('chat-messages');
+
+    const productos = [
+        {
+            nombre: "Maleta de Jean",
+            link: "productomaleta.html",
+            categoria: "accesorios",
+            precio: "$29.000",
+            caracteristicas: "Hecha de tela de jean reciclada, forrada con tela sintética. Ideal para el día a día. Cómoda y duradera.",
+            medidas: "40cm x 35cm",
+            imagen: "img/WhatsApp Image 2025-09-11 at 1.32.17 PM.jpeg"
+        },
+        {
+            nombre: "Bolso de Jean",
+            link: "productobolso.html",
+            categoria: "accesorios",
+            precio: "$22.000",
+            caracteristicas: "Hecho de tela de jean reciclada. Ideal para el día a día. Cómodo y duradero.",
+            medidas: "25cm x 30cm",
+            imagen: "img/bolsojean.jpg"
+        },
+        {
+            nombre: "Trapo para Limpiar",
+            link: "productotrapo.html",
+            categoria: "hogar",
+            precio: "$6.000",
+            caracteristicas: "Elaborado con telas de algodón reutilizadas. Absorbe líquidos de manera eficiente. Ideal para la limpieza del hogar.",
+            medidas: "24cm x 24cm",
+            imagen: "img/WhatsApp Image 2025-06-06 at 1.17.37 PM (2).jpeg"
+        },
+        {
+            nombre: "Funda para Almohada",
+            link: "productofunda.html",
+            categoria: "hogar",
+            precio: "$8.000",
+            caracteristicas: "Fabricada con retazos de tela de distintos colores. Suave al tacto y fácil de lavar.",
+            medidas: "43cm x 43cm",
+            imagen: "img/WhatsApp Image 2025-08-29 at 1.40.49 PM.jpeg"
+        },
+        {
+            nombre: "Cama para Perro",
+            link: "productocamaperro.html",
+            categoria: "mascotas",
+            precio: "$30.000",
+            caracteristicas: "Rellena con fibras de ropa reciclada. Proporciona comodidad y calidez a tu mascota.",
+            medidas: "40cm x 40cm",
+            imagen: "img/WhatsApp Image 2025-06-05 at 11.37.26 PM.jpeg"
+        },
+        {
+            nombre: "Cama para Gato",
+            link: "productocamagato.html",
+            categoria: "mascotas",
+            precio: "$30.000",
+            caracteristicas: "Diseñada para el confort de los felinos. Materiales suaves y ecológicos.",
+            medidas: "40cm x 40cm",
+            imagen: "img/WhatsApp Image 2025-06-05 at 11.37.26 PM.jpeg"
+        },
+        {
+            nombre: "Pañoleta",
+            link: "productopañoleta.html",
+            categoria: "mascotas",
+            precio: "$8.000",
+            caracteristicas: "Perfecta para complementar el look de tu mascota. Hecha de tela de algodón reutilizada.",
+            medidas: "39cm x 95cm",
+            imagen: "img/pañoleta.jpg"
+        }
+    ];
+
+    function addMessage(msg, sender = "bot", isHtml = false) {
+        const div = document.createElement('div');
+        div.classList.add('message');
+        div.classList.add(sender === "bot" ? "bot-message" : "user-message");
+        if (isHtml) {
+            div.innerHTML = msg;
+        } else {
+            div.textContent = msg;
+        }
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Renderizar categorías con acordeones e imágenes
+    function displayCategoryAccordion() {
+        const categories = ['mascotas', 'hogar', 'accesorios'];
+        let html = '<p>Puedes explorar nuestros productos por categoría:</p>';
+        
+        categories.forEach(category => {
+            const categoryProducts = productos.filter(p => p.categoria === category);
+            const categoryId = `category-${category}-${Date.now()}`;
+            
+            html += `
+                <div class="product-accordion-item">
+                    <button class="accordion-button" aria-expanded="false" aria-controls="${categoryId}">
+                        ${category.charAt(0).toUpperCase() + category.slice(1)}
+                        <span class="accordion-icon">▶</span>
+                    </button>
+                    <div id="${categoryId}" class="accordion-content">
+                        <div class="category-content-container">
+                            ${categoryProducts.map((p, index) => {
+                                const productId = `product-${p.nombre.replace(/\s/g, '-')}-${Date.now()}-${index}`;
+                                return `
+                                    <div class="product-accordion-item-nested">
+                                        <button class="accordion-button" aria-expanded="false" aria-controls="${productId}">
+                                            ${p.nombre}
+                                            <span class="accordion-icon">▶</span>
+                                        </button>
+                                        <div id="${productId}" class="accordion-content">
+                                            <img src="${p.imagen}" alt="${p.nombre}" style="max-width:120px; border-radius:8px; margin-bottom:8px;">
+                                            <p><strong>Precio:</strong> ${p.precio}</p>
+                                            <p><strong>Características:</strong> ${p.caracteristicas}</p>
+                                            <p><strong>Medidas:</strong> ${p.medidas}</p>
+                                            <button class="buy-button" onclick="window.location.href='${p.link}'">Ver y Comprar</button>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        addMessage(html, "bot", true);
+        setupAccordionListeners();
+    }
+
+    function setupAccordionListeners() {
+        // Se usa setTimeout para asegurar que los elementos se hayan renderizado antes de añadir listeners
+        setTimeout(() => {
+            document.querySelectorAll('.accordion-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = document.getElementById(button.getAttribute('aria-controls'));
+                    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+                    button.setAttribute('aria-expanded', !isExpanded);
+                    
+                    // Si se está expandiendo, calcula el scrollHeight para la animación
+                    if (!isExpanded) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        content.classList.add('active');
+                    } else {
+                        // Si se está cerrando, vuelve a 0
+                        content.style.maxHeight = "0";
+                        content.classList.remove('active');
+                    }
+                    
+                    button.querySelector('.accordion-icon').textContent = isExpanded ? '▶' : '▼';
+                });
+            });
+        }, 100); // Pequeño retraso para asegurar el DOM
+    }
+
+    function handleBotResponse(query) {
+        const q = query.toLowerCase().trim();
+        // Siempre muestra el mensaje de bienvenida y el acordeón de productos
+        const welcomeMessage = `
+            ¡Hola! Soy el asistente de Ecotextil. 🌱
+            <br><br>
+            ¿En qué puedo ayudarte?
+        `;
+        addMessage(welcomeMessage, "bot", true);
+        displayCategoryAccordion();
+        return;
+    }
+
+    chatbotToggle.addEventListener('click', () => {
+        const isVisible = chatbotWindow.style.display === 'flex'; // Usamos 'flex' en CSS para el layout
+        chatbotWindow.style.display = isVisible ? 'none' : 'flex';
+        if (!isVisible && chatMessages.innerHTML === '') {
+             // Muestra el mensaje de bienvenida y el menú la primera vez que se abre
+             handleBotResponse(""); 
+        }
+    });
+
+    chatClose.addEventListener('click', () => {
+        chatbotWindow.style.display = 'none';
+    });
+
+    sendButton.addEventListener('click', () => {
+        const text = userInput.value.trim();
+        if (text === "") return;
+        addMessage(text, "user");
+        chatMessages.innerHTML = ''; // Limpia para mostrar la respuesta del bot completa
+        handleBotResponse(text);
+        userInput.value = '';
+    });
+
+    userInput.addEventListener('keypress', e => {
+        if (e.key === 'Enter') sendButton.click();
+    });
+
+    clearChatButton.addEventListener('click', () => {
+        chatMessages.innerHTML = '';
+        handleBotResponse(""); // Muestra el mensaje de inicio
+    });
+</script>
+</body>
+</html>
